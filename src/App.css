@@ -1,0 +1,24 @@
+/* App-specific styles */
+
+/* Ensure smooth screen transitions */
+.screen-container {
+  will-change: transform, opacity;
+}
+
+/* Prevent text selection on interactive elements */
+.pixel-btn,
+.pixel-input,
+.pixel-card {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Custom tap highlight removal for mobile */
+button, a, input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure proper stacking context */
+.screen-container {
+  isolation: isolate;
+}
