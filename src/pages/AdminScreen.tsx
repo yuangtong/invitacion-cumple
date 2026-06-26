@@ -58,6 +58,19 @@ function emailStatusBadge(status: string) {
 }
 
 export default function AdminScreen() {
+  useEffect(() => {
+    const root = document.getElementById('root');
+    const prev = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+    if (root) root.style.overflow = 'auto';
+    return () => {
+      document.documentElement.style.overflow = prev;
+      document.body.style.overflow = '';
+      if (root) root.style.overflow = '';
+    };
+  }, []);
+
   const [password, setPassword] = useState(() => sessionStorage.getItem(ADMIN_PASSWORD_KEY) || '');
   const [authed, setAuthed] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
@@ -175,7 +188,7 @@ export default function AdminScreen() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white">
+    <div className="min-h-screen bg-[#0A0A0A] text-white overflow-y-auto">
       {/* Header */}
       <div className="border-b border-white/10 px-5 py-4 flex items-center justify-between sticky top-0 bg-[#0A0A0A]/95 backdrop-blur z-10">
         <div>
