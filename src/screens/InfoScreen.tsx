@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { Calendar, MapPin, Music, Share2, Gift, ExternalLink, X, Image } from 'lucide-react';
+import { Calendar, MapPin, Music, Share2, Gift, ExternalLink, X, Image, Mail } from 'lucide-react';
+import type { FormData } from '../types';
 
 function generateICSFile() {
   const icsContent = `BEGIN:VCALENDAR
@@ -38,13 +39,40 @@ const GALLERY_IMAGES = [
   { src: '/images/tematica-8.jpg', alt: 'Temática 8' },
 ];
 
-export function InfoScreen() {
+interface InfoScreenProps {
+  formData: FormData;
+}
+
+export function InfoScreen({ formData }: InfoScreenProps) {
   const [showQRModal, setShowQRModal] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [showTrollface, setShowTrollface] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailSending, setEmailSending] = useState(false);
   const trollAudioRef = useRef<HTMLAudioElement | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleResendEmail = async () => {
+    if (!formData.email || emailSending) return;
+    setEmailSending(true);
+    try {
+      await fetch('/.netlify/functions/send-confirmation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          nombre: `${formData.nombre} ${formData.apellido}`.trim(),
+        }),
+      });
+      setEmailSent(true);
+      setTimeout(() => setEmailSent(false), 4000);
+    } catch {
+      // silently fail
+    } finally {
+      setEmailSending(false);
+    }
+  };
 
   const handleWhatsApp = () => {
     setShowTrollface(true);
@@ -276,6 +304,24 @@ export function InfoScreen() {
           <Calendar className="w-3 h-3" />
           GUARDAR EN MI CALENDARIO
         </button>
+
+        {/* Reenviar email */}
+        {formData.email && (
+          <button
+            onClick={handleResendEmail}
+            disabled={emailSending}
+            className={`w-full flex items-center justify-center gap-2 font-pixel text-[8px] py-3 rounded-xl shadow-md transition-colors active:scale-[0.98] ${
+              emailSent
+                ? 'bg-green-500 text-white'
+                : emailSending
+                ? 'bg-white/20 text-white/40 cursor-not-allowed'
+                : 'bg-white/80 backdrop-blur-sm border-2 border-electric-turquoise/40 text-electric-turquoise hover:bg-white'
+            }`}
+          >
+            <Mail className="w-3 h-3" />
+            {emailSent ? '¡EMAIL ENVIADO!' : emailSending ? 'ENVIANDO...' : 'REENVIAR INFO AL CORREO'}
+          </button>
+        )}
 
         {/* WhatsApp trollface button */}
         <button

@@ -194,11 +194,11 @@ export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScree
         <div className="text-center mb-4">
           <p className="font-pixel text-[9px] text-white/60">
             {value === 0 && 'Zona: Virgen Total'}
-            {value === 20 && 'Zona: Clásico/a'}
-            {value === 40 && 'Zona: Curioso/a'}
-            {value === 60 && 'Zona: Abierto/a'}
-            {value === 80 && 'Zona: Casi casi'}
-            {value === 100 && 'Zona: Arcoíris Total'}
+            {value === 20 && 'Zona: Menta y Lola'}
+            {value === 40 && 'Zona: Choco'}
+            {value === 60 && 'Zona: Adolfo'}
+            {value === 80 && 'Zona: Majo'}
+            {value === 100 && 'Zona: Alberch'}
           </p>
         </div>
 
@@ -226,9 +226,6 @@ export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScree
             </div>
           </div>
         )}
-
-        {/* Spacer */}
-        <div className="flex-1 min-h-[20px]" />
 
         {/* Next button */}
         <button

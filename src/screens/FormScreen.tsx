@@ -24,6 +24,7 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
   const [sexo, setSexo] = useState(formData.sexo);
   const [errors, setErrors] = useState<{ nombre?: string; apellido?: string; email?: string; sexo?: string }>({});
   const [phase, setPhase] = useState<'form' | 'celebration' | 'results'>('form');
+  const [submitting, setSubmitting] = useState(false);
   const celebrationRef = useRef<HTMLDivElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const voteBar1Ref = useRef<HTMLDivElement>(null);
@@ -156,9 +157,27 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
     }
   }, [phase, voteStats, drawSpectrumChart]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+    if (submitting) return;
+    setSubmitting(true);
+
+    try {
+      const dupRes = await fetch('/.netlify/functions/check-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+      const dupData = await dupRes.json();
+      if (dupData.duplicate) {
+        setErrors(prev => ({ ...prev, email: 'Este email ya está registrado. ¿Ya confirmaste antes?' }));
+        setSubmitting(false);
+        return;
+      }
+    } catch {
+      // si falla el check, dejamos pasar
+    }
 
     const formEl = document.querySelector('form[name="rsvp"]') as HTMLFormElement;
     if (formEl) {
@@ -184,6 +203,7 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
     }).catch(() => {});
 
     setPhase('celebration');
+    setSubmitting(false);
   };
 
   if (phase === 'celebration') {
@@ -408,14 +428,15 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
         {/* Submit button */}
         <button
           type="submit"
-          className="pixel-btn bg-rave-yellow text-pixel-black w-full animate-pulse-glow"
-          style={{ boxShadow: '4px 4px 0px #0A0A0A, 0 0 15px #FFFF00' }}
+          disabled={submitting}
+          className={`pixel-btn w-full ${submitting ? 'bg-white/20 text-white/40 cursor-not-allowed' : 'bg-rave-yellow text-pixel-black animate-pulse-glow'}`}
+          style={!submitting ? { boxShadow: '4px 4px 0px #0A0A0A, 0 0 15px #FFFF00' } : {}}
         >
-          ENVIAR Y SUPLICAR ENTRADA
+          {submitting ? 'VERIFICANDO...' : 'ENVIAR Y SUPLICAR ENTRADA'}
         </button>
 
         {/* Error message */}
-        {(errors.nombre || errors.apellido || errors.sexo) && (
+        {(errors.nombre || errors.apellido || errors.email || errors.sexo) && (
           <p className="font-pixel text-red-400 text-[7px] text-center">
             Alberth dice que algo salió mal. Intenta de nuevo o te quedas afuera.
           </p>

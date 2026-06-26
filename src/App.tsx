@@ -106,7 +106,7 @@ export default function App() {
           />
         );
       case 'info':
-        return <InfoScreen />;
+        return <InfoScreen formData={formData} />;
       default:
         return null;
     }

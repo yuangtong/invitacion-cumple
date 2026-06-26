@@ -143,9 +143,6 @@ export function VoteScreen({ selectedVote, stats, onVote, onNext }: VoteScreenPr
           </div>
         )}
 
-        {/* Spacer */}
-        <div className="flex-1 min-h-[20px]" />
-
         {/* Next button */}
         <button
           onClick={onNext}

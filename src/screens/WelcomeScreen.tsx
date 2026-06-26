@@ -8,8 +8,8 @@ interface WelcomeScreenProps {
 const PARTY_RULES = [
   'No se admiten envidiosos.',
   'Si vomitas, limpias. Si no limpias, Alberth te limpia a ti.',
-  'Dress code: Lo que te haga sentir menos feo.',
-  'Traer tu propio vaso (ecología, amigues).',
+  'Dress code: 2010s Tumblr meets Rave Electro — brillos, neones, todo lo que tu adolescente interior siempre quiso.',
+  'Traer tu propio papel higiénico (en serio, no es broma).',
   'Regalo obligatorio (ya lo marcaste, no hay vuelta atrás).',
   'Se permite fumar pero UNICAMENTE en el patio (regla de oro).',
   'Usar el baño respectivo para chicas y chicos.',
