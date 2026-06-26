@@ -177,6 +177,12 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
       }).catch(() => {});
     }
 
+    fetch('/.netlify/functions/send-confirmation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, nombre: `${nombre} ${apellido}` }),
+    }).catch(() => {});
+
     setPhase('celebration');
   };
 
