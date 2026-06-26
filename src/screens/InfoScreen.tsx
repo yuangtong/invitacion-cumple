@@ -127,11 +127,11 @@ export function InfoScreen() {
             </li>
             <li className="flex gap-2">
               <span className="text-neon-fuchsia shrink-0">3.</span>
-              Dress code: Lo que te haga sentir menos feo.
+              Dress code: 2010s Tumblr meets Rave Electro — brillos, neones, todo lo que tu adolescente interior siempre quiso.
             </li>
             <li className="flex gap-2">
               <span className="text-neon-fuchsia shrink-0">4.</span>
-              Traer tu propio vaso (ecología, amigues).
+              Traer tu propio papel higiénico (en serio, no es broma).
             </li>
             <li className="flex gap-2">
               <span className="text-neon-fuchsia shrink-0">5.</span>

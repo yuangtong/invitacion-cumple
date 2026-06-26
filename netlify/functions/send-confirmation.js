@@ -75,8 +75,8 @@ function buildEmailHTML(nombre) {
         <ol style="padding-left: 0; list-style: none;">
           <li><span>1.</span>No se admiten envidiosos.</li>
           <li><span>2.</span>Si vomitas, limpias. Si no limpias, Alberth te limpia a ti.</li>
-          <li><span>3.</span>Dress code: Lo que te haga sentir menos feo.</li>
-          <li><span>4.</span>Traer tu <span class="highlight">propio vaso</span> (ecología, amigues).</li>
+          <li><span>3.</span>Dress code: <span class="highlight">2010s Tumblr meets Rave Electro</span> — brillos, neones, todo lo que tu adolescente interior siempre quiso.</li>
+          <li><span>4.</span>Traer tu <span class="highlight">papel higiénico</span> (en serio, no es broma).</li>
           <li><span>5.</span>Regalo obligatorio — ya lo marcaste, no hay vuelta atrás.</li>
           <li><span>6.</span>Fumar <span class="highlight">ÚNICAMENTE en el patio</span>.</li>
           <li><span>7.</span>Usar el baño respectivo para chicas y chicos.</li>
@@ -116,8 +116,11 @@ function buildEmailHTML(nombre) {
     <div class="card">
       <div class="card-title">💸 Colaboraciones</div>
       <div class="card-body">
-        <p>¿Te sobra plata? Nosotros también queremos sobrar.</p>
-        <p style="margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.5);">Yape disponible en la fiesta — QR en la invitación.</p>
+        <p style="margin-bottom: 14px;">¿Te sobra plata? Nosotros también queremos sobrar.</p>
+        <div style="text-align: center;">
+          <img src="https://invitacion-secreta.netlify.app/images/qr-yape.jpg" alt="QR Yape" width="160" height="160" style="border-radius: 12px; background: #ffffff; padding: 8px; display: inline-block;" />
+          <p style="margin-top: 8px; font-size: 11px; color: rgba(255,255,255,0.4);">Escanea con Yape</p>
+        </div>
       </div>
     </div>
 
