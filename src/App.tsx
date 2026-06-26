@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
+import { Routes, Route } from 'react-router';
 import { useNetlifyStats } from './hooks/useNetlifyStats';
 import { gsap } from 'gsap';
 import type { Screen, FormData } from './types';
@@ -12,6 +13,7 @@ import { VoteScreen } from './screens/VoteScreen';
 import { SpectrumScreen } from './screens/SpectrumScreen';
 import { FormScreen } from './screens/FormScreen';
 import { InfoScreen } from './screens/InfoScreen';
+import AdminScreen from './pages/AdminScreen';
 import './App.css';
 
 const INITIAL_FORM_DATA: FormData = {
@@ -112,6 +114,25 @@ export default function App() {
     }
   };
 
+  return (
+    <Routes>
+      <Route path="/admin" element={<AdminScreen />} />
+      <Route path="*" element={<MainApp
+        screen={screen}
+        formData={formData}
+        voteStats={voteStats}
+        spectrumStats={spectrumStats}
+        audioEnabled={audioEnabled}
+        toggleAudio={toggleAudio}
+        glitchActive={glitchActive}
+        screenRef={screenRef}
+        renderScreen={renderScreen}
+      />} />
+    </Routes>
+  );
+}
+
+function MainApp({ screen, audioEnabled, toggleAudio, glitchActive, screenRef, renderScreen }: any) {
   return (
     <div className="h-full w-full flex justify-center bg-pixel-black">
       {/* Mobile container */}
