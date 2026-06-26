@@ -28,17 +28,39 @@ END:VCALENDAR`;
 
 // Theme gallery images using existing assets
 const GALLERY_IMAGES = [
-  { src: '/images/icon-sombrero.png', alt: 'Pixel art sombrero' },
-  { src: '/images/icon-k.png', alt: 'Pixel art K' },
-  { src: '/images/icon-slider-thumb.png', alt: 'Pixel art corazón arcoíris' },
-  { src: '/images/bg-welcome.jpg', alt: 'Collage 2010s' },
+  { src: '/images/tematica-1.jpeg', alt: 'Temática 1' },
+  { src: '/images/tematica-2.jpg', alt: 'Temática 2' },
+  { src: '/images/tematica-3.jpg', alt: 'Temática 3' },
+  { src: '/images/tematica-4.jpg', alt: 'Temática 4' },
+  { src: '/images/tematica-5.jpg', alt: 'Temática 5' },
+  { src: '/images/tematica-6.jpg', alt: 'Temática 6' },
+  { src: '/images/tematica-7.jpg', alt: 'Temática 7' },
+  { src: '/images/tematica-8.jpg', alt: 'Temática 8' },
 ];
 
 export function InfoScreen() {
   const [showQRModal, setShowQRModal] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
+  const [showTrollface, setShowTrollface] = useState(false);
+  const trollAudioRef = useRef<HTMLAudioElement | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const handleWhatsApp = () => {
+    setShowTrollface(true);
+    if (!trollAudioRef.current) {
+      trollAudioRef.current = new Audio('/audio/troll-face.mp3');
+      trollAudioRef.current.volume = 0.7;
+    }
+    trollAudioRef.current.currentTime = 0;
+    trollAudioRef.current.play().catch(() => {});
+  };
+
+  const closeTrollface = () => {
+    setShowTrollface(false);
+    trollAudioRef.current?.pause();
+    if (trollAudioRef.current) trollAudioRef.current.currentTime = 0;
+  };
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -162,7 +184,7 @@ export function InfoScreen() {
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-full object-cover pixel-art"
+                  className="w-full h-full object-cover"
                 />
               </button>
             ))}
@@ -236,7 +258,7 @@ export function InfoScreen() {
             className="mx-auto block"
           >
             <img
-              src="/images/qr-yape.png"
+              src="/images/qr-yape.jpg"
               alt="QR Yape"
               className="w-32 h-32 object-contain bg-white rounded-lg p-2 shadow-md hover:shadow-lg transition-shadow"
             />
@@ -255,6 +277,15 @@ export function InfoScreen() {
           GUARDAR EN MI CALENDARIO
         </button>
 
+        {/* WhatsApp trollface button */}
+        <button
+          onClick={handleWhatsApp}
+          className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white font-pixel text-[8px] py-3 rounded-xl shadow-md hover:bg-[#1ebe57] transition-colors active:scale-[0.98]"
+        >
+          <span className="text-[12px]">💬</span>
+          UNIRSE AL GRUPO DE WHATSAPP
+        </button>
+
         {/* Compartir */}
         <button
           onClick={handleCopyLink}
@@ -264,6 +295,31 @@ export function InfoScreen() {
           {copied ? 'LINK COPIADO!' : 'INVITAR A OTRO ALMA'}
         </button>
       </div>
+
+      {/* Trollface Modal */}
+      {showTrollface && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-6"
+          onClick={closeTrollface}
+        >
+          <div className="relative max-w-[300px] w-full" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={closeTrollface}
+              className="absolute -top-3 -right-3 z-10 bg-black/60 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-black"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <img
+              src="/images/troll-face.jpg"
+              alt="Trollface"
+              className="w-full rounded-xl border-4 border-neon-fuchsia shadow-[0_0_20px_#FF00FF]"
+            />
+            <p className="font-pixel text-neon-fuchsia text-[8px] text-center mt-3">
+              U MAD BRO?
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* QR Modal */}
       {showQRModal && (
@@ -279,7 +335,7 @@ export function InfoScreen() {
               </button>
             </div>
             <img
-              src="/images/qr-yape.png"
+              src="/images/qr-yape.jpg"
               alt="QR Yape ampliado"
               className="w-full aspect-square object-contain"
             />

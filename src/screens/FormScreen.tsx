@@ -20,8 +20,9 @@ const SEXO_OPTIONS = [
 export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: FormScreenProps) {
   const [nombre, setNombre] = useState(formData.nombre);
   const [apellido, setApellido] = useState(formData.apellido);
+  const [email, setEmail] = useState(formData.email);
   const [sexo, setSexo] = useState(formData.sexo);
-  const [errors, setErrors] = useState<{ nombre?: string; apellido?: string; sexo?: string }>({});
+  const [errors, setErrors] = useState<{ nombre?: string; apellido?: string; email?: string; sexo?: string }>({});
   const [phase, setPhase] = useState<'form' | 'celebration' | 'results'>('form');
   const celebrationRef = useRef<HTMLDivElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -30,12 +31,15 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const validate = () => {
-    const newErrors: { nombre?: string; apellido?: string; sexo?: string } = {};
+    const newErrors: { nombre?: string; apellido?: string; email?: string; sexo?: string } = {};
     if (!nombre.trim() || nombre.trim().length < 2) {
       newErrors.nombre = 'Mínimo 2 caracteres, no seas vago';
     }
     if (!apellido.trim() || apellido.trim().length < 2) {
       newErrors.apellido = 'Tu apellido también, queremos saber quién eres';
+    }
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      newErrors.email = 'Pon un email válido, ¿o no quieres las fotos?';
     }
     if (!sexo) {
       newErrors.sexo = 'Elige una opción, no hay escape';
@@ -160,6 +164,7 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
     if (formEl) {
       const formDataNetlify = new FormData(formEl);
       formDataNetlify.set('nombre', `${nombre} ${apellido}`);
+      formDataNetlify.set('email', email);
       formDataNetlify.set('sexo', sexo);
       formDataNetlify.set('voto', formData.voto || '');
       formDataNetlify.set('espectro', String(formData.espectro));
@@ -213,8 +218,11 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
           </div>
 
           <div className="pixel-card p-4 bg-white/5">
-            <p className="font-pixel text-electric-turquoise text-[9px] mb-3">
+            <p className="font-pixel text-electric-turquoise text-[9px] mb-1">
               VOTACIÓN ELECCIONES
+            </p>
+            <p className="font-pixel text-white/40 text-[6px] mb-3 leading-relaxed italic">
+              * Netamente satírico pa&apos; divertirnos. ¡No peleas! Quien se pelea entrega el chiquito a Alberth — y él no perdona.
             </p>
             <div className="mb-2">
               <div className="flex justify-between mb-1">
@@ -262,7 +270,7 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
           </div>
 
           <button
-            onClick={() => onSubmit({ nombre, apellido, sexo })}
+            onClick={() => onSubmit({ nombre, apellido, email, sexo })}
             className="pixel-btn bg-neon-fuchsia text-white w-full mt-2"
             style={{ boxShadow: '4px 4px 0px #0A0A0A, 0 0 15px #FF00FF' }}
           >
@@ -274,7 +282,7 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
   }
 
   return (
-    <div className="screen-container bg-pixel-black px-5 overflow-y-auto scrollbar-hide">
+    <div className="screen-container px-5 overflow-y-auto scrollbar-hide" style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(255,0,255,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(0,255,255,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(75,0,130,0.2) 0%, transparent 70%), #0A0A0A' }}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 min-h-full justify-center py-8">
         {/* Header */}
         <div>
@@ -317,6 +325,23 @@ export function FormScreen({ formData, voteStats, spectrumStats, onSubmit }: For
           />
           {errors.apellido && (
             <p className="font-pixel text-red-400 text-[6px] mt-1">{errors.apellido}</p>
+          )}
+        </div>
+
+        {/* Email input */}
+        <div>
+          <label className="font-pixel text-electric-turquoise text-[8px] mb-1 block">
+            EMAIL
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: undefined })); }}
+            placeholder="Te mandaremos las fotos de la fiesta por acá"
+            className="pixel-input"
+          />
+          {errors.email && (
+            <p className="font-pixel text-red-400 text-[6px] mt-1">{errors.email}</p>
           )}
         </div>
 

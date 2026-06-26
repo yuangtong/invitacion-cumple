@@ -36,7 +36,7 @@ export function VoteScreen({ selectedVote, stats, onVote, onNext }: VoteScreenPr
   };
 
   return (
-    <div className="screen-container bg-gradient-rave relative px-5">
+    <div className="screen-container relative px-5" style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(255,0,255,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(0,255,255,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(75,0,130,0.2) 0%, transparent 70%), #0A0A0A' }}>
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
         {/* Question label */}
         <p className="font-pixel text-retro-pink text-[9px] mb-3 w-full">
@@ -100,8 +100,11 @@ export function VoteScreen({ selectedVote, stats, onVote, onNext }: VoteScreenPr
             ref={resultsRef}
             className="pixel-card p-4 mb-6 bg-white/5 w-full"
           >
-            <p className="font-pixel text-electric-turquoise text-[9px] mb-4 text-center">
+            <p className="font-pixel text-electric-turquoise text-[9px] mb-2 text-center">
               RESULTADOS PARCIALES
+            </p>
+            <p className="font-pixel text-white/40 text-[6px] text-center mb-3 leading-relaxed italic">
+              * Estas preguntas son netamente satíricas pa&apos; divertirnos. ¡No peleas! Quien se pelea entrega el chiquito a Alberth — y él no perdona.
             </p>
 
             {/* Sombrero bar */}

@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
+import { useNetlifyStats } from './hooks/useNetlifyStats';
 import { gsap } from 'gsap';
-import type { Screen, FormData, VoteStats, SpectrumStats } from './types';
+import type { Screen, FormData } from './types';
 import { useAudio } from './hooks/useAudio';
 import { FloatingParticles } from './components/FloatingParticles';
 import { GlitchTransition } from './components/GlitchTransition';
@@ -16,27 +17,15 @@ import './App.css';
 const INITIAL_FORM_DATA: FormData = {
   nombre: '',
   apellido: '',
+  email: '',
   sexo: '',
   regalo: true,
   voto: null,
   espectro: 50,
 };
 
-const MOCK_VOTE_STATS: VoteStats = {
-  total: 47,
-  sombrero: 29,
-  k: 18,
-  porcentajeSombrero: 61.7,
-  porcentajeK: 38.3,
-};
-
-const MOCK_SPECTRUM_STATS: SpectrumStats = {
-  media: 42.5,
-  mediana: 38,
-  distribucion: [5, 8, 12, 18, 22, 28, 35, 42, 38, 30, 25, 20, 15, 10, 8, 5, 3, 2, 1, 1],
-};
-
 export default function App() {
+  const { voteStats, spectrumStats } = useNetlifyStats();
   const [screen, setScreen] = useState<Screen>('loader');
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
   const [glitchActive, setGlitchActive] = useState(false);
@@ -93,7 +82,7 @@ export default function App() {
         return (
           <VoteScreen
             selectedVote={formData.voto}
-            stats={MOCK_VOTE_STATS}
+            stats={voteStats}
             onVote={handleVote}
             onNext={() => navigateTo('q2-spectrum')}
           />
@@ -102,7 +91,7 @@ export default function App() {
         return (
           <SpectrumScreen
             value={formData.espectro}
-            stats={MOCK_SPECTRUM_STATS}
+            stats={spectrumStats}
             onChange={handleSpectrum}
             onNext={() => navigateTo('form')}
           />
@@ -111,8 +100,8 @@ export default function App() {
         return (
           <FormScreen
             formData={formData}
-            voteStats={MOCK_VOTE_STATS}
-            spectrumStats={MOCK_SPECTRUM_STATS}
+            voteStats={voteStats}
+            spectrumStats={spectrumStats}
             onSubmit={handleFormSubmit}
           />
         );

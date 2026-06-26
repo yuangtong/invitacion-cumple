@@ -12,6 +12,14 @@ interface SpectrumScreenProps {
 
 const TICK_MARKS = [0, 20, 40, 60, 80, 100];
 
+const SPECTRUM_CHARACTERS = [
+  { value: 20, name: 'Menta y Lola', img: '/images/menta-y-lola.webp' },
+  { value: 40, name: 'Choco', img: '/images/choco.webp' },
+  { value: 60, name: 'Adolfo', img: '/images/adolfo.webp' },
+  { value: 80, name: 'Majo', img: '/images/anal.webp' },
+  { value: 100, name: 'Alberch', img: '/images/alberch.webp' },
+];
+
 export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScreenProps) {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -98,7 +106,7 @@ export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScree
 
   return (
     <div className="screen-container px-5 relative"
-      style={{ background: 'linear-gradient(135deg, #4B0082 0%, #FF00FF 40%, #00FFFF 100%)' }}
+      style={{ background: 'radial-gradient(ellipse at 20% 20%, rgba(255,0,255,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(0,255,255,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(75,0,130,0.2) 0%, transparent 70%), #0A0A0A' }}
     >
       <div className="relative z-10 flex flex-col items-center justify-center h-full">
         {/* Question label */}
@@ -116,12 +124,45 @@ export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScree
           (Preguntamos porque la fiesta es el mismo día de la marcha y necesitamos datos para el catering)
         </p>
 
+        {/* Character stickers header */}
+        <div className="w-full mb-3">
+          <div className="flex justify-between px-1">
+            {SPECTRUM_CHARACTERS.map((char) => (
+              <div
+                key={char.value}
+                className={`flex flex-col items-center gap-1 transition-all duration-200 ${
+                  value === char.value ? 'scale-110' : 'opacity-50 scale-90'
+                }`}
+              >
+                <div
+                  className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all duration-200 ${
+                    value === char.value
+                      ? 'border-neon-fuchsia shadow-[0_0_8px_#FF00FF]'
+                      : 'border-white/20'
+                  }`}
+                >
+                  <img
+                    src={char.img}
+                    alt={char.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span
+                  className={`font-pixel text-[5px] text-center leading-tight max-w-[40px] ${
+                    value === char.value ? 'text-neon-fuchsia' : 'text-white/40'
+                  }`}
+                >
+                  {char.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Slider with tick marks */}
         <div className="mb-4 px-2 w-full">
-          <div className="flex justify-between mb-2">
-            <span className="font-pixel text-white text-[10px]">0</span>
-            <span className="font-pixel text-neon-fuchsia text-[12px]">{value}</span>
-            <span className="font-pixel text-white text-[10px]">100</span>
+          <div className="flex justify-center mb-2">
+            <span className="font-pixel text-neon-fuchsia text-[14px]">{value}</span>
           </div>
 
           {/* Slider container with tick marks */}
@@ -130,6 +171,7 @@ export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScree
               type="range"
               min={0}
               max={100}
+              step={20}
               value={value}
               onChange={handleSliderChange}
               onMouseUp={handleSliderRelease}
@@ -149,12 +191,14 @@ export function SpectrumScreen({ value, stats, onChange, onNext }: SpectrumScree
         </div>
 
         {/* Selected value display */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <p className="font-pixel text-[9px] text-white/60">
-            {value < 25 && 'Zona: Clásico'}
-            {value >= 25 && value < 50 && 'Zona: Curioso'}
-            {value >= 50 && value < 75 && 'Zona: Abierto'}
-            {value >= 75 && 'Zona: Arcoíris Total'}
+            {value === 0 && 'Zona: Virgen Total'}
+            {value === 20 && 'Zona: Clásico/a'}
+            {value === 40 && 'Zona: Curioso/a'}
+            {value === 60 && 'Zona: Abierto/a'}
+            {value === 80 && 'Zona: Casi casi'}
+            {value === 100 && 'Zona: Arcoíris Total'}
           </p>
         </div>
 
