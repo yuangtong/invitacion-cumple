@@ -2,7 +2,7 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = 'Cumpleaños Yuen, Aiming & Mathi — El Trío de la Diversidad Sexual <no-reply@fommo.studio>';
+const FROM = 'Cumpleaños Yuen, Aiming & Mathi — El Trío de la Diversidad Sexual <hola@fommo.studio>';
 
 function buildEmailHTML(nombre) {
   return `<!DOCTYPE html>
@@ -12,7 +12,6 @@ function buildEmailHTML(nombre) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>¡Tu invitación está confirmada!</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0A0A0A; font-family: 'Inter', sans-serif; color: #ffffff; }
     .wrapper { max-width: 480px; margin: 0 auto; padding: 32px 20px; }
