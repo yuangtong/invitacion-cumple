@@ -2,6 +2,7 @@ export type Screen = 'loader' | 'welcome' | 'q1-vote' | 'q2-spectrum' | 'form' |
 
 export interface FormData {
   nombre: string;
+  apellido: string;
   sexo: string;
   regalo: boolean;
   voto: 'sombrero' | 'k' | null;

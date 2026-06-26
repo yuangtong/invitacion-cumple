@@ -15,6 +15,7 @@ import './App.css';
 
 const INITIAL_FORM_DATA: FormData = {
   nombre: '',
+  apellido: '',
   sexo: '',
   regalo: true,
   voto: null,
