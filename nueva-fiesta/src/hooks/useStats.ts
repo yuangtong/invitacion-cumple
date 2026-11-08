@@ -20,7 +20,7 @@ export function useStats() {
 
   useEffect(() => {
     let cancelled = false;
-    fetch('/.netlify/functions/get-stats')
+    fetch('/api/stats')
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => {
         if (cancelled) return;

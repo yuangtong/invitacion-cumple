@@ -1,6 +1,5 @@
-{
-  "_comment": "Todo el contenido de la invitación vive aquí. Lo usan el front y las funciones de Netlify (email). Cambia los TODO.",
-
+// Todo el contenido de la invitación vive aquí. Lo usan el front (src/) y las funciones de Vercel (api/). Cambia los TODO.
+export default {
   "evento": {
     "nombre": "TODO Nombre de la fiesta",
     "anfitriones": "TODO Anfitriones",
@@ -13,59 +12,99 @@
     "mapsQuery": "TODO Dirección completa, Ciudad, País",
     "urlPublica": "https://TODO.netlify.app"
   },
-
   "loader": {
-    "textos": ["CARGANDO FIESTA...", "TOCA PARA ENTRAR"],
+    "textos": [
+      "CARGANDO FIESTA...",
+      "TOCA PARA ENTRAR"
+    ],
     "duracionMs": 2500
   },
-
   "bienvenida": {
     "titulo": "ESTÁS INVITADO",
     "cuerpo": "TODO Texto de bienvenida. Responde las preguntas para entrar.",
     "cta": "COMENZAR"
   },
-
   "pregunta1": {
     "etiqueta": "PREGUNTA 1 DE 3",
     "titulo": "TODO ¿Pregunta de votación A vs B?",
     "subtitulo": "TODO subtexto",
     "opciones": [
-      { "id": "a", "label": "Opción A", "imagen": "" },
-      { "id": "b", "label": "Opción B", "imagen": "" }
+      {
+        "id": "a",
+        "label": "Opción A",
+        "imagen": ""
+      },
+      {
+        "id": "b",
+        "label": "Opción B",
+        "imagen": ""
+      }
     ],
     "disclaimer": "TODO disclaimer de los resultados"
   },
-
   "pregunta2": {
     "etiqueta": "PREGUNTA 2 DE 3",
     "titulo": "TODO ¿Pregunta de espectro (0–100)?",
     "subtitulo": "TODO subtexto",
-    "extremos": ["0", "100"],
+    "extremos": [
+      "0",
+      "100"
+    ],
     "valorInicial": 50,
     "zonas": [
-      { "valor": 20, "nombre": "Zona 1", "imagen": "" },
-      { "valor": 40, "nombre": "Zona 2", "imagen": "" },
-      { "valor": 60, "nombre": "Zona 3", "imagen": "" },
-      { "valor": 80, "nombre": "Zona 4", "imagen": "" },
-      { "valor": 100, "nombre": "Zona 5", "imagen": "" }
+      {
+        "valor": 20,
+        "nombre": "Zona 1",
+        "imagen": ""
+      },
+      {
+        "valor": 40,
+        "nombre": "Zona 2",
+        "imagen": ""
+      },
+      {
+        "valor": 60,
+        "nombre": "Zona 3",
+        "imagen": ""
+      },
+      {
+        "valor": 80,
+        "nombre": "Zona 4",
+        "imagen": ""
+      },
+      {
+        "valor": 100,
+        "nombre": "Zona 5",
+        "imagen": ""
+      }
     ]
   },
-
   "formulario": {
     "etiqueta": "PREGUNTA 3 DE 3",
     "subtitulo": "Datos reales para la lista.",
     "preguntaExtra": {
       "titulo": "TODO Pregunta de opción múltiple",
       "opciones": [
-        { "value": "opcion_1", "label": "Opción 1" },
-        { "value": "opcion_2", "label": "Opción 2" },
-        { "value": "opcion_3", "label": "Opción 3" }
+        {
+          "value": "opcion_1",
+          "label": "Opción 1"
+        },
+        {
+          "value": "opcion_2",
+          "label": "Opción 2"
+        },
+        {
+          "value": "opcion_3",
+          "label": "Opción 3"
+        }
       ]
     },
     "checkbox": "Llevaré regalo (obligatorio)",
-    "celebracion": { "titulo": "¡APROBADO!", "subtitulo": "Ya estás en la lista" }
+    "celebracion": {
+      "titulo": "¡APROBADO!",
+      "subtitulo": "Ya estás en la lista"
+    }
   },
-
   "info": {
     "reglas": [
       "TODO Regla 1",
@@ -75,10 +114,19 @@
     "dressCode": "TODO Dress code",
     "vibe": {
       "texto": "TODO Descripción del vibe",
-      "tags": ["#Tag1", "#Tag2"]
+      "tags": [
+        "#Tag1",
+        "#Tag2"
+      ]
     },
-    "playlist": { "nombre": "TODO Playlist", "url": "" },
-    "yape": { "texto": "¿Quieres colaborar?", "qrImagen": "" },
+    "playlist": {
+      "nombre": "TODO Playlist",
+      "url": ""
+    },
+    "yape": {
+      "texto": "¿Quieres colaborar?",
+      "qrImagen": ""
+    },
     "galeria": [],
     "easterEgg": {
       "activo": false,
@@ -87,13 +135,10 @@
       "texto": "Te la creíste"
     }
   },
-
   "email": {
     "from": "TODO Nombre <hola@tudominio.com>",
     "replyTo": "",
     "asunto": "¡Confirmado! Datos de la fiesta 🎉",
     "saludo": "Ya estás en la lista."
-  },
-
-  "netlifyFormName": "rsvp"
-}
+  }
+};

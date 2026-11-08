@@ -7,16 +7,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Formulario oculto para que Netlify Forms detecte los campos. Si cambias netlifyFormName en event.config.json, cámbialo aquí también. -->
-    <form name="rsvp" netlify netlify-honeypot="bot-field" hidden>
-      <input type="text" name="nombre" />
-      <input type="email" name="email" />
-      <input type="text" name="extra" />
-      <input type="checkbox" name="regalo" />
-      <input type="hidden" name="voto" />
-      <input type="hidden" name="espectro" />
-      <input type="text" name="bot-field" />
-    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

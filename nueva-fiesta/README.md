@@ -1,29 +1,38 @@
 # Nueva fiesta — invitación
 
 Misma mecánica que la invitación del trío (carpeta raíz), con diseño provisional (wireframe) para iterar.
+Hosting en **Vercel**, datos en **Supabase**, emails con **Resend**.
 
 ## Flujo
 Loader → Bienvenida → Pregunta 1 (voto A/B + resultados reales) → Pregunta 2 (slider 0–100 + distribución real)
-→ Formulario (valida, revisa email duplicado, guarda en Netlify Forms, manda email) → Celebración (confetti)
+→ Formulario (valida, guarda en Supabase, rechaza emails repetidos, manda email) → Celebración (confetti)
 → Resultados acumulados → Datos de la fiesta (mapa, reglas, playlist, QR, calendario .ics, reenviar email,
 compartir por WhatsApp con easter egg opcional, copiar link).
 
 `/admin`: contraseña, stats, tabla de invitados, búsqueda, reenviar email, exportar CSV.
 
 ## Dónde se edita
-- **Textos y datos del evento:** `event.config.json` (front y email lo leen de aquí).
+- **Textos y datos del evento:** `event.config.js` (lo leen el front y el email).
 - **Imágenes / audio:** `public/images/`, `public/audio/` (`track.mp3` + `sfx-tap|success|error.mp3`).
 - **Diseño:** `src/index.css` (clases `.screen`, `.btn`, `.card`, …) y cada pantalla en `src/screens/`.
 
-## Funciones (Netlify)
-`get-stats`, `check-email`, `send-confirmation`, `resend-email`, `get-submissions` (lógica común en `netlify/lib/`).
-Variables: ver `.env.example`.
+## API (Vercel Functions, carpeta `api/`)
+| Ruta | Qué hace |
+|---|---|
+| `GET /api/stats` | % de votos y distribución del espectro |
+| `POST /api/rsvp` | Guarda la confirmación + manda email (409 si el email ya existe) |
+| `POST /api/send-confirmation` | Reenvía el email (solo a emails registrados) |
+| `GET /api/admin/guests` | Lista de invitados (header `x-admin-password`) |
+| `POST /api/admin/resend-email` | Reenvío desde admin (header `x-admin-password`) |
 
-## Deploy
-Nuevo sitio en Netlify con **Base directory = `nueva-fiesta`**. Si cambias `netlifyFormName`, cámbialo también en `index.html`.
+## Puesta en marcha
+1. **Supabase:** crea un proyecto y ejecuta `supabase/schema.sql` en el SQL Editor.
+2. **Vercel:** importa el repo con **Root Directory = `nueva-fiesta`** (detecta Vite solo).
+3. **Variables de entorno** en Vercel: las de `.env.example`.
+4. **Resend:** verifica el dominio del remitente (`email.from` en `event.config.js`).
 
 ```bash
 npm install
 npm run dev        # solo front
-npx netlify dev    # front + funciones
+npx vercel dev     # front + funciones (necesita un .env con las variables)
 ```

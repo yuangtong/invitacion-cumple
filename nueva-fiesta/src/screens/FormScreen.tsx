@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import confetti from 'canvas-confetti';
 import { config } from '../config';
-import { fullName, isDuplicateEmail, sendConfirmation, submitRSVP } from '../lib/api';
+import { submitRSVP } from '../lib/api';
 import { VoteBars } from '../components/VoteBars';
 import { SpectrumChart } from '../components/SpectrumChart';
 import type { Answers, SpectrumStats, VoteStats } from '../types';
@@ -10,8 +10,8 @@ import type { Answers, SpectrumStats, VoteStats } from '../types';
 type Errors = Partial<Record<'nombre' | 'apellido' | 'email' | 'extra' | 'regalo', string>>;
 type Phase = 'form' | 'celebration' | 'results';
 
-// Pregunta 3: datos reales → valida → revisa email duplicado → guarda en Netlify Forms
-// → manda email → celebración con confetti → resultados acumulados → info de la fiesta.
+// Pregunta 3: datos reales → valida → guarda en Supabase vía /api/rsvp (rechaza emails repetidos)
+// → el servidor manda el email → celebración con confetti → resultados acumulados → info de la fiesta.
 export function FormScreen({ answers, voteStats, spectrumStats, onSubmitted, onDone }: {
   answers: Answers;
   voteStats: VoteStats;
@@ -47,16 +47,18 @@ export function FormScreen({ answers, voteStats, spectrumStats, onSubmitted, onD
     if (submitting || !validate()) return;
     setSubmitting(true);
 
-    if (await isDuplicateEmail(email)) {
-      setErrors((p) => ({ ...p, email: 'Este email ya está registrado. ¿Ya confirmaste antes?' }));
+    const data = { nombre, apellido, email: email.trim(), extra, regalo };
+    const result = await submitRSVP({ ...answers, ...data });
+    if (result !== 'ok') {
+      setErrors((p) => ({
+        ...p,
+        email: result === 'duplicate'
+          ? 'Este email ya está registrado. ¿Ya confirmaste antes?'
+          : 'No se pudo enviar. Revisa tu conexión e intenta otra vez.',
+      }));
       setSubmitting(false);
       return;
     }
-
-    const data = { nombre, apellido, email: email.trim(), extra, regalo };
-    const full: Answers = { ...answers, ...data };
-    submitRSVP(full).catch(() => {});
-    sendConfirmation(full.email, fullName(full)).catch(() => {});
     onSubmitted(data);
     setSubmitting(false);
     setPhase('celebration');

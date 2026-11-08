@@ -1,8 +1,8 @@
-// Envío del email de confirmación (Resend). Usado por send-confirmation y resend-email.
-const { Resend } = require('resend');
-const { config, escapeHtml } = require('./shared');
+// Email de confirmación (Resend). Usado por /api/rsvp, /api/send-confirmation y /api/admin/resend-email.
+import { Resend } from 'resend';
+import { config, escapeHtml } from './shared.js';
 
-function buildEmailHTML(nombre) {
+export function buildEmailHTML(nombre) {
   const e = config.evento;
   const info = config.info;
   const n = escapeHtml(nombre);
@@ -34,7 +34,7 @@ function buildEmailHTML(nombre) {
 </div></body></html>`;
 }
 
-async function sendConfirmation({ email, nombre }) {
+export async function sendConfirmation({ email, nombre }) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const payload = {
     from: config.email.from,
@@ -42,8 +42,6 @@ async function sendConfirmation({ email, nombre }) {
     subject: config.email.asunto,
     html: buildEmailHTML(nombre),
   };
-  if (config.email.replyTo) payload.reply_to = config.email.replyTo;
+  if (config.email.replyTo) payload.replyTo = config.email.replyTo;
   return resend.emails.send(payload);
 }
-
-module.exports = { sendConfirmation, buildEmailHTML };

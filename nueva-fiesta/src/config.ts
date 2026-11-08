@@ -1,5 +1,4 @@
-import raw from '../event.config.json';
+import raw from '../event.config.js';
 
-// Config tipada de la invitación (ver event.config.json).
+// Config de la invitación (ver event.config.js en la raíz del proyecto).
 export const config = raw;
-export type OptionId = (typeof raw.pregunta1.opciones)[number]['id'];

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { Calendar, Copy, Gift, Image, Mail, MapPin, Music, Share2 } from 'lucide-react';
 import { config } from '../config';
 import { copyLink, downloadICS, mapsUrl, shareWhatsApp } from '../lib/actions';
-import { fullName, sendConfirmation } from '../lib/api';
+import { resendConfirmation } from '../lib/api';
 import { Modal } from '../components/Modal';
 import type { Answers } from '../types';
 
@@ -28,7 +28,8 @@ export function InfoScreen({ answers }: { answers: Answers }) {
     if (!answers.email || emailState === 'sending') return;
     setEmailState('sending');
     try {
-      await sendConfirmation(answers.email, fullName(answers));
+      const res = await resendConfirmation(answers.email);
+      if (!res.ok) throw new Error();
       setEmailState('sent');
       setTimeout(() => setEmailState('idle'), 4000);
     } catch {
