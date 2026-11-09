@@ -1,144 +1,117 @@
-// Todo el contenido de la invitación vive aquí. Lo usan el front (src/) y las funciones de Vercel (api/). Cambia los TODO.
+// Todo el contenido de la invitación vive aquí. Lo usan el front (src/) y las funciones de Vercel (api/).
+// Busca "TODO" para ver lo que falta confirmar.
 export default {
-  "evento": {
-    "nombre": "TODO Nombre de la fiesta",
-    "anfitriones": "TODO Anfitriones",
-    "fechaCorta": "TODO DD MMM",
-    "fechaLarga": "TODO Sábado DD de mes · 21:00 – 06:00 hrs",
-    "inicioUTC": "20270101T020000Z",
-    "finUTC": "20270101T110000Z",
-    "direccion": "TODO Dirección",
-    "referencia": "TODO Distrito, Ciudad · Referencia",
-    "mapsQuery": "TODO Dirección completa, Ciudad, País",
-    "urlPublica": "https://TODO.netlify.app"
+  evento: {
+    marca: 'Huamanga Club',
+    edicion: 'Edición 0',
+    edicionCorta: '00',
+    nombre: 'El cumple de Majo',
+    cumpleanera: 'Majo',
+    fechaCorta: 'TODO DD.MM',
+    fechaLarga: 'TODO Sábado DD de mes',
+    hora: '21:00 – late',
+    inicioUTC: '20270101T020000Z', // TODO fecha real (hora de Lima + 5 h)
+    finUTC: '20270101T110000Z',
+    direccion: 'Huamanga 419',
+    referencia: 'Magdalena del Mar, Lima · límite con Pueblo Libre', // TODO confirmar
+    mapsQuery: 'Huamanga 419, Magdalena del Mar, Lima, Peru',
+    urlPublica: 'https://TODO.vercel.app',
   },
-  "loader": {
-    "textos": [
-      "CARGANDO FIESTA...",
-      "TOCA PARA ENTRAR"
+
+  // Escenas 3D de Spline (letras globo cromadas)
+  spline: {
+    club: 'https://prod.spline.design/nCbIKyw6U5Vr-tyc/scene.splinecode',
+    invitado: 'https://prod.spline.design/E7ixEusTl982zmgw/scene.splinecode',
+    // TODO: activar cuando la escena se re-exporte con renderer "Both" o "WebGL 2" (hoy es solo WebGPU)
+    invitadoActivo: false,
+  },
+
+  // Música de fondo (archivo en public/audio/). Vacío = sin música, solo efectos.
+  musica: '',
+
+  intro: {
+    cta: 'Toca para abrir',
+    para: 'Para ti',
+    titulo: 'Estás invitado',
+    subtitulo: 'a la fiesta más hot del año',
+    cta2: 'Ver quién organiza',
+  },
+
+  club: {
+    presenta: 'presenta',
+    lineup: [
+      // TODO: quién pone música y a qué hora
+      { hora: '21:00', nombre: 'TODO DJ 1' },
+      { hora: '23:00', nombre: 'TODO DJ 2' },
+      { hora: '01:00', nombre: '+ invitado sorpresa' },
     ],
-    "duracionMs": 2500
+    nota: 'Primera fiesta organizada por nosotros, con consola propia.',
+    cta: 'Toca para saber la temática',
   },
-  "bienvenida": {
-    "titulo": "ESTÁS INVITADO",
-    "cuerpo": "TODO Texto de bienvenida. Responde las preguntas para entrar.",
-    "cta": "COMENZAR"
-  },
-  "pregunta1": {
-    "etiqueta": "PREGUNTA 1 DE 3",
-    "titulo": "TODO ¿Pregunta de votación A vs B?",
-    "subtitulo": "TODO subtexto",
-    "opciones": [
-      {
-        "id": "a",
-        "label": "Opción A",
-        "imagen": ""
-      },
-      {
-        "id": "b",
-        "label": "Opción B",
-        "imagen": ""
-      }
+
+  ruleta: {
+    titulo: 'La temática',
+    subtitulo: 'Que decida la ruleta',
+    cta: 'Girar',
+    opciones: [
+      { id: 'boda', label: 'Boda', img: 'lifestyle-heels' },
+      { id: 'quince', label: 'Quinceañero', img: 'shapes-crown' },
+      { id: 'playa', label: 'Playa', img: 'nature-palm-tree' },
+      { id: 'pijamada', label: 'Pijamada', img: 'nature-moon' },
+      { id: 'graduacion', label: 'Graduación', img: 'lifestyle-book' },
+      { id: 'concierto', label: 'Concierto', img: 'lifestyle-guitar' },
+      { id: 'turista', label: 'Turista', img: 'lifestyle-globe' },
+      { id: 'desfile', label: 'Desfile escolar', img: 'lifestyle-trumpet' },
+      { id: 'cumple', label: 'Cumpleaños', img: 'lifestyle-gift' },
     ],
-    "disclaimer": "TODO disclaimer de los resultados"
+    // Siempre gana esta. Se dibuja con el regalo tachado.
+    ganadora: { id: 'incorrecta', label: 'La ocasión incorrecta', img: 'lifestyle-gift' },
   },
-  "pregunta2": {
-    "etiqueta": "PREGUNTA 2 DE 3",
-    "titulo": "TODO ¿Pregunta de espectro (0–100)?",
-    "subtitulo": "TODO subtexto",
-    "extremos": [
-      "0",
-      "100"
+
+  tematica: {
+    titulo: 'La ocasión incorrecta',
+    texto: 'Ven vestido para cualquier ocasión… menos para un cumpleaños.',
+    ejemplos: [
+      { label: 'Boda', img: 'lifestyle-heels' },
+      { label: 'Playa', img: 'nature-palm-tree' },
+      { label: 'Pijamada', img: 'nature-moon' },
+      { label: 'Graduación', img: 'lifestyle-book' },
+      { label: 'Concierto', img: 'lifestyle-guitar' },
+      { label: 'Turista', img: 'lifestyle-globe' },
     ],
-    "valorInicial": 50,
-    "zonas": [
-      {
-        "valor": 20,
-        "nombre": "Zona 1",
-        "imagen": ""
-      },
-      {
-        "valor": 40,
-        "nombre": "Zona 2",
-        "imagen": ""
-      },
-      {
-        "valor": 60,
-        "nombre": "Zona 3",
-        "imagen": ""
-      },
-      {
-        "valor": 80,
-        "nombre": "Zona 4",
-        "imagen": ""
-      },
-      {
-        "valor": 100,
-        "nombre": "Zona 5",
-        "imagen": ""
-      }
-    ]
+    noVale: 'No vale: gorrito de fiesta, ropa de cumpleaños ni nada que diga “happy birthday”.',
+    cta: 'Confirmar asistencia',
   },
-  "formulario": {
-    "etiqueta": "PREGUNTA 3 DE 3",
-    "subtitulo": "Datos reales para la lista.",
-    "preguntaExtra": {
-      "titulo": "TODO Pregunta de opción múltiple",
-      "opciones": [
-        {
-          "value": "opcion_1",
-          "label": "Opción 1"
-        },
-        {
-          "value": "opcion_2",
-          "label": "Opción 2"
-        },
-        {
-          "value": "opcion_3",
-          "label": "Opción 3"
-        }
-      ]
-    },
-    "checkbox": "Llevaré regalo (obligatorio)",
-    "celebracion": {
-      "titulo": "¡APROBADO!",
-      "subtitulo": "Ya estás en la lista"
-    }
-  },
-  "info": {
-    "reglas": [
-      "TODO Regla 1",
-      "TODO Regla 2",
-      "TODO Regla 3"
+
+  formulario: {
+    pasos: [
+      { id: 'nombre', titulo: '¿Cómo te llamas?' },
+      { id: 'email', titulo: '¿A qué email te mandamos la entrada?' },
+      { id: 'cancion', titulo: '¿Qué canción le pedirías al DJ?' },
     ],
-    "dressCode": "TODO Dress code",
-    "vibe": {
-      "texto": "TODO Descripción del vibe",
-      "tags": [
-        "#Tag1",
-        "#Tag2"
-      ]
-    },
-    "playlist": {
-      "nombre": "TODO Playlist",
-      "url": ""
-    },
-    "yape": {
-      "texto": "¿Quieres colaborar?",
-      "qrImagen": ""
-    },
-    "galeria": [],
-    "easterEgg": {
-      "activo": false,
-      "imagen": "",
-      "audio": "",
-      "texto": "Te la creíste"
-    }
+    enviar: 'Generar mi entrada',
   },
-  "email": {
-    "from": "TODO Nombre <hola@tudominio.com>",
-    "replyTo": "",
-    "asunto": "¡Confirmado! Datos de la fiesta 🎉",
-    "saludo": "Ya estás en la lista."
-  }
+
+  ticket: {
+    titulo: 'Tu entrada',
+    stub: 'Admit one',
+    dressCode: 'Dress code: la ocasión incorrecta',
+  },
+
+  info: {
+    reglas: [
+      'Vístete para la ocasión incorrecta (ver arriba).',
+      'TODO Regla 2',
+      'TODO Regla 3',
+    ],
+    playlist: { nombre: 'Playlist de la noche', url: '' }, // TODO
+    yape: { texto: '¿Quieres colaborar?', qrImagen: '' }, // TODO
+  },
+
+  email: {
+    from: 'Huamanga Club <hola@fommo.studio>', // TODO confirmar remitente
+    replyTo: '',
+    asunto: 'Tu entrada para Huamanga Club · Edición 0',
+    saludo: 'Ya estás en la lista. Esta es tu entrada.',
+  },
 };

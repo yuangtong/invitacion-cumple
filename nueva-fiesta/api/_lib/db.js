@@ -21,21 +21,23 @@ export async function listRsvps(columns = '*') {
 export async function findByEmail(email) {
   const { url, headers } = base();
   const q = encodeURIComponent(email.trim());
-  const res = await fetch(`${url}?select=id,nombre,email&email=ilike.${q}&limit=1`, { headers });
+  const res = await fetch(`${url}?select=id,nombre,email,numero&email=ilike.${q}&limit=1`, { headers });
   if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
   const rows = await res.json();
   return rows[0] || null;
 }
 
-// Devuelve { duplicate: true } si el email ya existe (índice único en lower(email)).
+// Devuelve { duplicate: true } si el email ya existe (índice único en lower(email)),
+// o { duplicate: false, numero } con el N° de entrada asignado.
 export async function insertRsvp(row) {
   const { url, headers } = base();
-  const res = await fetch(url, {
+  const res = await fetch(`${url}?select=numero`, {
     method: 'POST',
-    headers: { ...headers, Prefer: 'return=minimal' },
+    headers: { ...headers, Prefer: 'return=representation' },
     body: JSON.stringify(row),
   });
   if (res.status === 409) return { duplicate: true };
   if (!res.ok) throw new Error(`Supabase error: ${res.status} ${await res.text()}`);
-  return { duplicate: false };
+  const [created] = await res.json();
+  return { duplicate: false, numero: created?.numero ?? null };
 }

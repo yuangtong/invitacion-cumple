@@ -1,5 +1,5 @@
 // Llamadas a las funciones de Vercel (carpeta api/).
-import type { Answers } from '../types';
+import type { Guest } from '../types';
 
 const postJSON = (url: string, body: unknown, headers: Record<string, string> = {}) =>
   fetch(url, {
@@ -8,26 +8,24 @@ const postJSON = (url: string, body: unknown, headers: Record<string, string> = 
     body: JSON.stringify(body),
   });
 
-export const fullName = (a: Pick<Answers, 'nombre' | 'apellido'>) =>
-  `${a.nombre.trim()} ${a.apellido.trim()}`.trim();
+export const fullName = (g: Pick<Guest, 'nombre' | 'apellido'>) =>
+  `${g.nombre.trim()} ${g.apellido.trim()}`.trim();
 
-export type RsvpResult = 'ok' | 'duplicate' | 'error';
+export type RsvpResult =
+  | { status: 'ok'; numero: number | null }
+  | { status: 'duplicate' }
+  | { status: 'error' };
 
-// Guarda la confirmación y el servidor manda el email.
-export async function submitRSVP(a: Answers): Promise<RsvpResult> {
+/** Guarda la confirmación; el servidor manda el email y devuelve el N° de entrada. */
+export async function submitRSVP(g: Guest): Promise<RsvpResult> {
   try {
-    const res = await postJSON('/api/rsvp', {
-      nombre: fullName(a),
-      email: a.email.trim(),
-      extra: a.extra,
-      regalo: a.regalo,
-      voto: a.voto,
-      espectro: a.espectro,
-    });
-    if (res.status === 409) return 'duplicate';
-    return res.ok ? 'ok' : 'error';
+    const res = await postJSON('/api/rsvp', { nombre: fullName(g), email: g.email.trim(), cancion: g.cancion.trim() });
+    if (res.status === 409) return { status: 'duplicate' };
+    if (!res.ok) return { status: 'error' };
+    const data = await res.json();
+    return { status: 'ok', numero: data.numero ?? null };
   } catch {
-    return 'error';
+    return { status: 'error' };
   }
 }
 
@@ -37,5 +35,5 @@ export const resendConfirmation = (email: string) => postJSON('/api/send-confirm
 export const getSubmissions = (password: string) =>
   fetch('/api/admin/guests', { headers: { 'x-admin-password': password } });
 
-export const adminResendEmail = (password: string, email: string, nombre: string) =>
-  postJSON('/api/admin/resend-email', { email, nombre }, { 'x-admin-password': password });
+export const adminResendEmail = (password: string, email: string, nombre: string, numero: number | null) =>
+  postJSON('/api/admin/resend-email', { email, nombre, numero }, { 'x-admin-password': password });

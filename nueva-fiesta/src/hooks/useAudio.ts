@@ -1,43 +1,30 @@
 import { useCallback, useRef, useState } from 'react';
+import { config } from '../config';
+import { setMuted, unlockAudio } from '../lib/sfx';
 
-// Música de fondo en loop + efectos de sonido. Pon tus archivos en public/audio/.
-const TRACK = '/audio/track.mp3';
-
-export type Sfx = 'tap' | 'success' | 'error';
-
+/** Música de fondo opcional (config.musica) + silencio global para los efectos. */
 export function useAudio() {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [enabled, setEnabled] = useState(false);
+  const musicRef = useRef<HTMLAudioElement | null>(null);
+  const [enabled, setEnabled] = useState(true);
 
-  const ensure = useCallback(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio(TRACK);
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.4;
-    }
-    return audioRef.current;
+  const start = useCallback(() => {
+    unlockAudio();
+    if (!config.musica) return;
+    musicRef.current ??= Object.assign(new Audio(config.musica), { loop: true, volume: 0.35 });
+    musicRef.current.play().catch(() => {});
   }, []);
 
-  const play = useCallback(() => {
-    ensure().play().catch(() => {});
-    setEnabled(true);
-  }, [ensure]);
-
   const toggle = useCallback(() => {
-    if (enabled) {
-      audioRef.current?.pause();
-      setEnabled(false);
-    } else {
-      play();
-    }
-  }, [enabled, play]);
+    setEnabled((prev) => {
+      const next = !prev;
+      setMuted(!next);
+      if (musicRef.current) {
+        if (next) musicRef.current.play().catch(() => {});
+        else musicRef.current.pause();
+      }
+      return next;
+    });
+  }, []);
 
-  const playSfx = useCallback((name: Sfx) => {
-    if (!enabled) return;
-    const sfx = new Audio(`/audio/sfx-${name}.mp3`);
-    sfx.volume = 0.5;
-    sfx.play().catch(() => {});
-  }, [enabled]);
-
-  return { enabled, play, toggle, playSfx };
+  return { enabled, start, toggle };
 }

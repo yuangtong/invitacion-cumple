@@ -14,11 +14,11 @@ export function downloadICS() {
     'BEGIN:VEVENT',
     `UID:${ev.inicioUTC}@invitacion`,
     `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-    `SUMMARY:${ev.nombre}`,
+    `SUMMARY:${ev.marca} · ${ev.edicion} — ${ev.nombre}`,
     `DTSTART:${ev.inicioUTC}`,
     `DTEND:${ev.finUTC}`,
     `LOCATION:${ev.mapsQuery.replace(/,/g, '\\,')}`,
-    `DESCRIPTION:${config.info.dressCode}${config.info.playlist.url ? ` · Playlist: ${config.info.playlist.url}` : ''}`,
+    `DESCRIPTION:Dress code: ${config.tematica.titulo}${config.info.playlist.url ? ` · Playlist: ${config.info.playlist.url}` : ''}`,
     'END:VEVENT',
     'END:VCALENDAR',
   ].join('\r\n');
@@ -26,7 +26,7 @@ export function downloadICS() {
   const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'invitacion.ics';
+  a.download = 'huamanga-club-edicion-0.ics';
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -34,7 +34,7 @@ export function downloadICS() {
 }
 
 export function shareWhatsApp() {
-  const text = `${ev.nombre} — ${ev.fechaLarga}. Confirma aquí: ${window.location.origin}`;
+  const text = `${ev.marca} presenta ${ev.edicion}: ${ev.nombre}. Confirma aquí: ${window.location.origin}`;
   window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
 }
 

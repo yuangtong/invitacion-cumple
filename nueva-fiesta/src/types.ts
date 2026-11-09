@@ -1,23 +1,9 @@
-export type Screen = 'loader' | 'welcome' | 'q1-vote' | 'q2-spectrum' | 'form' | 'info';
+export type Screen = 'intro' | 'club' | 'ruleta' | 'tematica' | 'form' | 'ticket' | 'info';
 
-export interface Answers {
+export interface Guest {
   nombre: string;
   apellido: string;
   email: string;
-  extra: string;
-  regalo: boolean;
-  voto: string | null;
-  espectro: number;
-}
-
-export interface VoteStats {
-  total: number;
-  votos: Record<string, number>;
-  porcentajes: Record<string, number>;
-}
-
-export interface SpectrumStats {
-  media: number;
-  mediana: number;
-  distribucion: number[];
+  cancion: string;
+  numero: number | null;
 }

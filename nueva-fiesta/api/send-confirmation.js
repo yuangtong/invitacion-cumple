@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   try {
     const guest = await findByEmail(email);
     if (!guest) return res.status(404).json({ error: 'Email no registrado' });
-    const { error } = await sendConfirmation({ email: guest.email, nombre: guest.nombre });
+    const { error } = await sendConfirmation({ email: guest.email, nombre: guest.nombre, numero: guest.numero });
     if (error) return res.status(500).json({ error: error.message });
     res.status(200).json({ ok: true });
   } catch (err) {
