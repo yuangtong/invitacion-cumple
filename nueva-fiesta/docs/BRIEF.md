@@ -1,28 +1,30 @@
-# Brief — Huamanga Club, Edición 0 (borrador)
+# Brief — Huamanga Club, Edición 0 (borrador v2)
 
-> Notas de la conversación. Todavía no es definitivo: faltan referencias de Pinterest y decisiones.
+> Notas de la conversación. Falta: datos del evento y decisión de cómo se hacen los assets 3D.
 
-## Lo que dijo el usuario
-- **Estilo:** moderno, joven, Y2K. Referencias de Pinterest por llegar. Referentes de diseño en `docs/referencias/diseno/`.
-- **Base:** replicar la mecánica de la invitación original (hero → preguntas → resultado → info), pero **menos de chiste**: más como un evento real con ese estilo.
-- **Hero:** música al aparecer, reveal ("estás invitado a la fiesta más hot del año"), posible **carta que se abre**.
-- **Preguntas:** datos del invitado (por definir).
-- **Selector de temática** (componente `selector-aleatorio`): parece aleatorio pero **siempre cae en "Vestirse para la ocasión incorrecta"** (o sea, no vestirse para un cumpleaños). Las otras cartas son temáticas señuelo: High School Musical, Halloween, etc.
-- **Huamanga Club, Edición 0:** Huamanga = la dirección de la casa de Majo (la cumpleañera). Es el nombre del grupo de amigos, que compró una consola de DJ: es su primera fiesta organizada por ellos mismos.
-- **Final:** se genera la invitación en formato **ticket** (componente `ticket-invitacion`).
+## Decidido
+- **Nombre:** Huamanga Club (como la calle; la fiesta es en la casa de Majo, Huamanga 419).
+- **Concepto:** primera fiesta organizada por el grupo de amigos (compraron una consola de DJ) → "Edición 0". Cumpleaños de Majo.
+- **Estilo:** se descarta Y2K. Va **globo inflado** (texturas balloon / inflatable 3D), ver `referencias/moodboard/`.
+  Mezclado con lenguaje de **cartel de club** (moodboard 04 y 05) para el lado "Club".
+- **Temática:** la ruleta parece aleatoria, pero **siempre cae en "La ocasión incorrecta"**: ir vestido para cualquier evento menos un cumpleaños.
+  La temática es la misma para todos. Las otras cartas son señuelos (High School Musical, Halloween, etc.).
+- **Preguntas:** solo datos (nombre, email) + **canción que le pedirías al DJ**.
+- **Final:** ticket (componente `ticket-invitacion`).
 
-## Propuesta de flujo (v0, para discutir)
-0. **Entrada:** logo de Huamanga Club + "toca para entrar". Ese toque desbloquea la música (los navegadores no dejan sonar audio sin un toque).
-1. **Sobre / carta:** se abre → "Estás invitado a la fiesta más hot del año".
-2. **Presentación:** "Huamanga Club presenta: Edición 0 — el cumple de Majo". Mención a la consola y a quién pone música.
-3. **Datos (una pregunta por pantalla):** nombre, email, canción que le pedirías al DJ.
-4. **Selector:** las cartas giran y "deciden" → cae en "La ocasión incorrecta". Después, a cada invitado se le asigna (o elige) **su** ocasión incorrecta.
-5. **Ticket:** nombre + ocasión asignada + número de entrada (#001…). Descargar / compartir en historias. Llega también por email.
-6. **Info:** fecha, dirección, reglas, playlist, calendario, Yape.
+## Flujo (v2)
+0. **Inicio:** carta/sobre inflado + "Toca para abrir". El toque desbloquea el audio.
+1. **Apertura:** al tocar, salen globos con sonidos "puff puff", explotan (pop) → aparece **"Estás invitado a la fiesta más hot del año"** en letras infladas.
+2. **Presentación:** "Huamanga Club presenta: Edición 0 — el cumple de Majo" (estilo cartel de club).
+3. **"Toca para saber la temática"** → ruleta de cartas (componente `selector-aleatorio` adaptado) → cae en **La ocasión incorrecta**.
+4. **Explicación de la temática:** qué significa, ejemplos de ocasiones (boda, graduación, funeral, gym…).
+5. **Datos:** nombre, apellido, email, canción para el DJ.
+6. **Ticket:** "Huamanga Club presenta · Edición 0 · [Nombre] · Dress code: la ocasión incorrecta · #NNN". Descargar / compartir. También por email.
+7. **Info:** fecha, dirección, reglas, playlist, calendario, Yape.
 - Se mantiene `/admin`.
 
-## Decisiones abiertas
-- ¿Ocasión por invitado: aleatoria o elegida por el invitado?
-- ¿Las preguntas tienen chiste o son solo datos?
-- Ortografía de la marca: ¿Huamanga Club o Wamanga Club?
-- Datos del evento: fecha, hora, lista de DJs/lineup, regalo, reglas.
+## Pendiente
+- Cómo se hacen los assets 3D inflados (letras y formas): ver opciones en la conversación.
+- Datos del evento: fecha, hora, lineup, reglas, regalo.
+- Lista de ocasiones señuelo de la ruleta y sus imágenes.
+- Sonidos: puff (inflar), pop (explotar), squeak (juguete).
