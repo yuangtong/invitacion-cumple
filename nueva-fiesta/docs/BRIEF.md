@@ -31,5 +31,5 @@
 
 ## Assets (en curso)
 - **Spline** ("Balloon Experience", letras globo cromadas): para "Huamanga Club" y "Estás invitado". Pedido al usuario: URL pública `.splinecode` (o archivo), fondo transparente, encuadre vertical, objetos con nombre, PNG + video de respaldo.
-- **Craftwork** (Plasticine y Unco comprados, Slimer gratis): PNG con fondo transparente (~1024 px) solo de los objetos elegidos. Slimer es el más cercano al look globo; Plasticine y Unco son de plastilina, mejor para íconos de la ruleta.
+- **Craftwork: se usa Plasticine** (Slimer descartado por el usuario). 39 objetos optimizados en `public/images/plasticine/` (WebP, 2.2 MB en total), con uso propuesto en su README.
 - Licencia: subir al repo solo las imágenes finales que se usan, no los packs completos.
