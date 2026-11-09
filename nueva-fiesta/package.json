@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@splinetool/react-spline": "^4.2.0",
+    "@splinetool/runtime": "^2.0.157",
     "canvas-confetti": "^1.9.4",
     "gsap": "^3.15.0",
     "lucide-react": "^0.562.0",

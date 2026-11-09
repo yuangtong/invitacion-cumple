@@ -24,12 +24,23 @@
 - Se mantiene `/admin`.
 
 ## Pendiente
-- Cómo se hacen los assets 3D inflados (letras y formas): ver opciones en la conversación.
 - Datos del evento: fecha, hora, lineup, reglas, regalo.
-- Lista de ocasiones señuelo de la ruleta y sus imágenes.
 - Sonidos: puff (inflar), pop (explotar), squeak (juguete).
+- Re-exportar "Estás invitado" en Spline con renderer "Both" o "WebGL 2" (hoy es solo WebGPU).
 
-## Assets (en curso)
-- **Spline** ("Balloon Experience", letras globo cromadas): para "Huamanga Club" y "Estás invitado". Pedido al usuario: URL pública `.splinecode` (o archivo), fondo transparente, encuadre vertical, objetos con nombre, PNG + video de respaldo.
+## Ruleta (aprobada)
+Boda/gala (tacones), Quinceañero (corona), Playa (palmera), Pijamada (luna), Examen/graduación (libro + lentes),
+Concierto (guitarra), Turista (globo terráqueo), Desfile escolar (trompeta), Cumpleaños (regalo).
+Carta ganadora "La ocasión incorrecta": **regalo tachado**.
+
+## Assets
+- **Spline: letras globo cromadas**
+  - Huamanga Club: `https://prod.spline.design/nCbIKyw6U5Vr-tyc/scene.splinecode` (445 KB, WebGL OK).
+    Objetos: `titulo-club`, `club-H`, `club-u`… y `Hint` (texto "Drag any balloon…", se oculta por código).
+  - Estás invitado: `https://prod.spline.design/E7ixEusTl982zmgw/scene.splinecode` (658 KB). **Exportada solo para WebGPU**: no carga en la mayoría de celulares → re-exportar.
+  - El runtime (`@splinetool/runtime`) descarga piezas desde `unpkg.com` y `cdn.spline.design`.
+  - Fondo transparente: se logra por código (`setBackgroundColor`).
+  - Sale el sello "Built with Spline" (plan gratuito).
+- **Carta de apertura:** referencias en `referencias/carta/` (Ephemera MIT + secuencia de Medium).
 - **Craftwork: se usa Plasticine** (Slimer descartado por el usuario). 39 objetos optimizados en `public/images/plasticine/` (WebP, 2.2 MB en total), con uso propuesto en su README.
 - Licencia: subir al repo solo las imágenes finales que se usan, no los packs completos.
